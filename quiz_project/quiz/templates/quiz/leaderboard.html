@@ -1,0 +1,10 @@
+{% extends "quiz/base.html" %}
+{% block title %}Leaderboard{% endblock %}
+{% block topbar_right %}{% if player %}<span class="player">{{ player }}</span>{% endif %}{% endblock %}
+{% block content %}
+<section class="card results">
+  <span class="badge">Leaderboard</span>
+  {% include "quiz/_leaderboard.html" %}
+  <p><a class="button button-lg" href="{% url 'quiz:home' %}">Back to quiz</a></p>
+</section>
+{% endblock %}

@@ -1,0 +1,21 @@
+<h2>Top 5 leaderboard</h2>
+{% if leaderboard %}
+<div class="table-wrap">
+<table class="leaderboard">
+  <thead><tr><th>#</th><th>Player</th><th>Score</th><th>%</th><th>Completed</th></tr></thead>
+  <tbody>
+  {% for entry in leaderboard %}
+    <tr{% if entry.pk == my_entry_id %} class="me"{% endif %}>
+      <td>{{ forloop.counter }}</td>
+      <td>{{ entry.player_name }}</td>
+      <td>{{ entry.score }}/{{ entry.total_questions }}</td>
+      <td>{{ entry.percentage|floatformat:"-1" }}%</td>
+      <td>{{ entry.completed_at|date:"Y-m-d H:i" }}</td>
+    </tr>
+  {% endfor %}
+  </tbody>
+</table>
+</div>
+{% else %}
+<p class="muted">No scores yet. Finish a quiz to be the first!</p>
+{% endif %}

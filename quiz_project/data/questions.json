@@ -1,0 +1,15 @@
+{
+  "title": "Python Programming",
+  "questions": [
+    {"id": 1, "question": "Which keyword defines a function?", "options": ["function", "def", "fun", "define"], "answerIndex": 1},
+    {"id": 2, "question": "What does type([]) return?", "options": ["<class 'tuple'>", "<class 'dict'>", "<class 'list'>", "<class 'set'>"], "answerIndex": 2},
+    {"id": 3, "question": "Which of these data types is immutable?", "options": ["list", "dict", "set", "tuple"], "answerIndex": 3},
+    {"id": 4, "question": "What does len(\"hello\") return?", "options": ["5", "4", "6", "Error"], "answerIndex": 0},
+    {"id": 5, "question": "Which symbol starts a single-line comment?", "options": ["//", "#", "--", "/*"], "answerIndex": 1},
+    {"id": 6, "question": "What is the result of 7 // 2?", "options": ["3.5", "4", "3", "2"], "answerIndex": 2},
+    {"id": 7, "question": "Which method adds an item to the end of a list?", "options": ["push()", "add()", "append()", "insert_end()"], "answerIndex": 2},
+    {"id": 8, "question": "Which expression creates an empty dictionary?", "options": ["[]", "()", "{}", "<>"], "answerIndex": 2},
+    {"id": 9, "question": "Which keyword handles an exception?", "options": ["catch", "rescue", "except", "handle"], "answerIndex": 2},
+    {"id": 10, "question": "What does the 'is' operator check?", "options": ["Same object identity", "Equal value", "Same type", "Membership"], "answerIndex": 0}
+  ]
+}

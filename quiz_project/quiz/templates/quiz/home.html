@@ -1,0 +1,30 @@
+{% extends "quiz/base.html" %}
+{% block title %}{{ title }}{% endblock %}
+{% block content %}
+<section class="card hero">
+  <span class="badge">Quiz</span>
+  <h1>{{ title }}</h1>
+  <p class="lead">Test your knowledge one question at a time. Get instant feedback after every answer and see your final score at the end.</p>
+  <ul class="stats">
+    <li><strong>{{ total }}</strong> question{{ total|pluralize }}</li>
+    <li>Pass mark <strong>{{ pass_percent }}%</strong></li>
+  </ul>
+  {% if skipped_count %}
+  <p class="note">{{ skipped_count }} malformed question{{ skipped_count|pluralize }} {{ skipped_count|pluralize:"was,were" }} skipped.</p>
+  {% endif %}
+  {% if in_progress %}
+  <div class="notice">You have a quiz in progress. <a href="{% url 'quiz:question' %}">Continue where you left off</a> or start over below.</div>
+  {% endif %}
+  <form method="post" action="{% url 'quiz:start' %}" novalidate data-validate="name"
+        {% if in_progress %}data-confirm="Start over? Your current progress will be lost."{% endif %}>
+    {% csrf_token %}
+    <label class="field-label" for="player_name">Your name</label>
+    <input class="input{% if error %} is-invalid{% endif %}" type="text" id="player_name" name="player_name"
+           value="{{ player_name }}" maxlength="{{ max_name }}" placeholder="Enter your name" autocomplete="nickname"
+           aria-describedby="name-error" {% if error %}aria-invalid="true"{% endif %}>
+    <p class="field-error" id="name-error" role="alert">{{ error }}</p>
+    <button type="submit" class="button button-lg">{% if in_progress %}Start over{% else %}Start quiz{% endif %}</button>
+  </form>
+  <p class="muted"><a href="{% url 'quiz:leaderboard' %}">View leaderboard</a></p>
+</section>
+{% endblock %}

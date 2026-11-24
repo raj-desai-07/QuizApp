@@ -1,0 +1,24 @@
+{% load static %}<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="color-scheme" content="light">
+  <title>{% block title %}Quiz{% endblock %}</title>
+  <link rel="stylesheet" href="{% static 'quiz/style.css' %}">
+</head>
+<body>
+  <a class="skip-link" href="#main">Skip to content</a>
+  <header class="topbar">
+    <div class="topbar-inner">
+      <a class="brand" href="{% url 'quiz:home' %}"><span class="brand-mark" aria-hidden="true">Q</span>QuizApp</a>
+      {% block topbar_right %}{% endblock %}
+    </div>
+  </header>
+  <main id="main" class="container">
+    {% block content %}{% endblock %}
+  </main>
+  <footer class="footer">QuizApp &middot; answers are scored on the server</footer>
+  <script src="{% static 'quiz/quiz.js' %}" defer></script>
+</body>
+</html>

@@ -1,0 +1,24 @@
+{% extends "quiz/base.html" %}
+{% block title %}Something went wrong{% endblock %}
+{% block content %}
+<section class="card error-card">
+  <span class="badge badge-danger">Error</span>
+  <h1>{% if is_data_error %}We couldn't load the quiz questions{% else %}Something went wrong{% endif %}</h1>
+  <p class="alert" role="alert">{{ message }}</p>
+  <h2>How to fix this</h2>
+  {% if is_data_error %}
+  <ol class="steps">
+    <li>Make sure the question file exists at <code>{{ questions_file }}</code>.</li>
+    <li>Check that it is valid JSON with a <code>title</code> and a non-empty <code>questions</code> list.</li>
+    <li>Each question needs <code>id</code>, <code>question</code>, 2&ndash;6 <code>options</code> and an <code>answerIndex</code> within range.</li>
+    <li>Save the file, then reload this page &ndash; no server restart is needed.</li>
+  </ol>
+  {% else %}
+  <ol class="steps">
+    <li>Go back to the start page and try again.</li>
+    <li>If the problem continues, refresh the page or restart the quiz.</li>
+  </ol>
+  {% endif %}
+  <p><a class="button" href="{% url 'quiz:home' %}">Back to start</a></p>
+</section>
+{% endblock %}

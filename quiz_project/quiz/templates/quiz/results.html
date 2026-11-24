@@ -1,0 +1,25 @@
+{% extends "quiz/base.html" %}
+{% block title %}Results{% endblock %}
+{% block topbar_right %}{% if player %}<span class="player">{{ player }}</span>{% endif %}{% endblock %}
+{% block content %}
+<section class="card results">
+  <span class="badge">Results</span>
+  <h1>{% if player %}{{ player }}, here are your results{% else %}Your results{% endif %}</h1>
+  <p class="muted">{{ title }}</p>
+  <p class="status {% if results.passed %}pass{% else %}fail{% endif %}">{% if results.passed %}PASS{% else %}FAIL{% endif %}</p>
+  <p class="score">{{ results.correct }} / {{ results.total }}</p>
+  <p class="percent">{{ results.percentage|floatformat:"-1" }}%</p>
+  <dl class="summary">
+    <div><dt>Final score</dt><dd>{{ results.correct }}</dd></div>
+    <div><dt>Total questions</dt><dd>{{ results.total }}</dd></div>
+    <div><dt>Correct</dt><dd class="ok">{{ results.correct }}</dd></div>
+    <div><dt>Incorrect</dt><dd class="bad">{{ results.incorrect }}</dd></div>
+  </dl>
+  <p class="muted">{% if results.passed %}Great job &ndash; you passed!{% else %}You need at least {{ pass_percent }}% to pass. Give it another go.{% endif %}</p>
+  {% include "quiz/_leaderboard.html" %}
+  <form method="post" action="{% url 'quiz:restart' %}">
+    {% csrf_token %}
+    <button type="submit" class="button button-lg">Restart quiz</button>
+  </form>
+</section>
+{% endblock %}

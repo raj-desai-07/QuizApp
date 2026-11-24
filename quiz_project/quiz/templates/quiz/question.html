@@ -1,0 +1,59 @@
+{% extends "quiz/base.html" %}
+{% block title %}Question {{ number }} of {{ total }}{% endblock %}
+{% block topbar_right %}{% if player %}<span class="player">{{ player }}</span>{% endif %}{% endblock %}
+{% block content %}
+<section class="card">
+  <div class="meta">
+    <span>Question {{ number }} of {{ total }}</span>
+    <span class="score-pill">Score: {{ score }}</span>
+  </div>
+  <div class="progress" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="{{ progress_percent }}" aria-label="Quiz progress">
+    <div class="progress-bar" style="width: {{ progress_percent }}%"></div>
+  </div>
+  <h1 class="question">{{ question }}</h1>
+
+  {% if feedback %}
+  <ul class="options" aria-label="Answers (locked)">
+    {% for option in options %}
+    <li class="option locked {{ option.css }}">
+      <span class="option-text">{{ option.text }}</span>
+      {% if option.css == "correct" %}<span class="tag tag-ok">Correct answer</span>{% elif option.css == "wrong" %}<span class="tag tag-bad">Your answer</span>{% endif %}
+    </li>
+    {% endfor %}
+  </ul>
+  {% if feedback.is_correct %}
+  <p class="feedback ok" role="status">Correct! Well done.</p>
+  {% else %}
+  <p class="feedback bad" role="status">Incorrect. The correct answer was: <strong>{{ correct_text }}</strong></p>
+  {% endif %}
+  <form method="post" action="{% url 'quiz:next' %}" data-once>
+    {% csrf_token %}
+    <input type="hidden" name="position" value="{{ position }}">
+    {% if error %}<p class="alert" role="alert">{{ error }}</p>{% endif %}
+    <button type="submit" class="button button-lg" data-autofocus>{% if is_last %}See results{% else %}Next question{% endif %}</button>
+  </form>
+  {% else %}
+  <form method="post" action="{% url 'quiz:answer' %}" novalidate data-validate="choice" data-once>
+    {% csrf_token %}
+    <input type="hidden" name="position" value="{{ position }}">
+    <fieldset>
+      <legend class="visually-hidden">Choose one answer</legend>
+      {% for option in options %}
+      <label class="option selectable">
+        <input type="radio" name="choice" value="{{ option.index }}">
+        <span class="radio-dot" aria-hidden="true"></span>
+        <span class="option-text">{{ option.text }}</span>
+      </label>
+      {% endfor %}
+    </fieldset>
+    <p class="field-error" id="choice-error" role="alert">{{ error }}</p>
+    <button type="submit" class="button button-lg">Submit answer</button>
+  </form>
+  {% endif %}
+</section>
+
+<form method="post" action="{% url 'quiz:restart' %}" class="restart" data-confirm="Restart the quiz? Your progress and score will be lost.">
+  {% csrf_token %}
+  <button type="submit" class="link-button">Restart quiz</button>
+</form>
+{% endblock %}
